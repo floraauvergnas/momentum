@@ -531,7 +531,7 @@ body{
   background:var(--modal-bg);
   border:1px solid var(--card-border);
   border-radius:26px;padding:30px;
-  width:100%;max-width:410px;
+  width:100%;max-width:410px;box-sizing:border-box;
   box-shadow:0 24px 64px var(--card-shadow),inset 0 1px 0 var(--card-glow);
   animation:slideUp 0.25s ease;
 }
@@ -542,9 +542,11 @@ body{
 .form-input{
   width:100%;padding:12px 16px;background:var(--input-bg);
   border:1px solid var(--card-border);border-radius:14px;color:var(--text);
-  font-family:'Syne',sans-serif;font-size:14px;transition:border-color 0.2s;outline:none;
+  font-family:'Syne',sans-serif;font-size:16px;transition:border-color 0.2s;outline:none;
+  box-sizing:border-box;
 }
 .form-input:focus{border-color:var(--accent)}
+.form-input[type="time"]{-webkit-appearance:none;appearance:none;min-width:0;max-width:100%}
 .color-picker{display:flex;gap:8px;flex-wrap:wrap}
 .color-swatch{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all 0.2s}
 .color-swatch.selected{border-color:#fff;transform:scale(1.18);box-shadow:0 0 10px rgba(0,0,0,0.2)}
@@ -576,14 +578,6 @@ body{
 @keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
 @keyframes toastOut{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(20px)}}
 
-/* ===== HAMBURGER ===== */
-.hamburger{
-  display:none;position:fixed;top:16px;left:16px;z-index:200;
-  width:42px;height:42px;border-radius:14px;
-  background:var(--hamburger-bg);backdrop-filter:blur(20px);
-  border:1px solid var(--card-border);cursor:pointer;
-  align-items:center;justify-content:center;font-size:18px;color:var(--text2);
-}
 
 /* ===== LANG/THEME FLOAT (mobile) ===== */
 .float-controls{
@@ -606,13 +600,12 @@ body{
   border-top:1px solid var(--card-border);
   padding:8px 0 env(safe-area-inset-bottom);
 }
-.bottom-nav-inner{display:flex;justify-content:space-around}
+.bottom-nav-inner{display:flex;justify-content:space-around;width:100%;box-sizing:border-box}
 .bottom-nav-item{
-  display:flex;flex-direction:column;align-items:center;gap:3px;
-  padding:6px 12px;cursor:pointer;color:var(--text3);transition:color 0.2s;font-size:20px;
+  display:flex;align-items:center;justify-content:center;
+  flex:1;min-width:0;padding:10px 2px;cursor:pointer;color:var(--text3);transition:color 0.2s;font-size:22px;
 }
 .bottom-nav-item.active{color:var(--accent)}
-.bottom-nav-label{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em}
 
 .sidebar-overlay{display:none;position:fixed;inset:0;z-index:99;background:rgba(0,0,0,0.45)}
 
@@ -661,12 +654,11 @@ body{
 @media(max-width:700px){
   .sidebar{position:fixed;top:0;left:0;bottom:0;z-index:101;width:0 !important;transition:width 0.28s cubic-bezier(.4,0,.2,1)}
   .sidebar.mobile-open{width:var(--sidebar-expanded) !important}
-  .sidebar-overlay{display:block}
-  .hamburger{display:flex}
+  .sidebar-overlay{display:none !important}
   .float-controls{display:flex}
   .bottom-nav{display:block}
   .main{height:calc(100vh - 64px)}
-  .page{padding:16px;padding-top:70px}
+  .page{padding:16px;padding-top:84px}
   .grid-2,.grid-3{grid-template-columns:1fr}
   .todo-layout{grid-template-columns:1fr}
   .pomo-time{font-size:38px}
@@ -684,7 +676,6 @@ body{
 <div class="orb orb3"></div>
 
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMobileSidebar()"></div>
-<button class="hamburger" id="hamburger" onclick="toggleMobileSidebar()">☰</button>
 
 <!-- Mobile float controls -->
 <div class="float-controls" id="float-controls">
@@ -701,23 +692,23 @@ body{
   </div>
   <div class="nav-items">
     <div class="nav-item active" data-page="dashboard" onclick="navigate('dashboard')">
-      <div class="nav-icon">◈</div>
+      <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
       <span class="nav-label" data-i18n="nav.dashboard">Dashboard</span>
     </div>
     <div class="nav-item" data-page="habits" onclick="navigate('habits')">
-      <div class="nav-icon">◻</div>
+      <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></div>
       <span class="nav-label" data-i18n="nav.habits">Habitudes</span>
     </div>
     <div class="nav-item" data-page="stats" onclick="navigate('stats')">
-      <div class="nav-icon">◷</div>
+      <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
       <span class="nav-label" data-i18n="nav.stats">Statistiques</span>
     </div>
     <div class="nav-item" data-page="todo" onclick="navigate('todo')">
-      <div class="nav-icon">≡</div>
+      <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div>
       <span class="nav-label" data-i18n="nav.todo">To-do &amp; Rappels</span>
     </div>
     <div class="nav-item" data-page="timer" onclick="navigate('timer')">
-      <div class="nav-icon">◉</div>
+      <div class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg></div>
       <span class="nav-label" data-i18n="nav.timer">Timer</span>
     </div>
   </div>
@@ -805,7 +796,6 @@ body{
         <div class="page-subtitle" data-i18n="habits.subtitle">Gérez vos habitudes quotidiennes</div>
       </div>
       <div style="display:flex;gap:10px">
-        <button class="btn btn-ghost btn-sm" onclick="exportCSV()" data-i18n="habits.export">⬇ Export CSV</button>
         <button class="btn btn-primary btn-sm" onclick="openAddHabit()" data-i18n="habits.new">+ Nouvelle</button>
       </div>
     </div>
@@ -909,9 +899,9 @@ body{
       </div>
       <div class="session-dots" id="session-dots"></div>
       <div class="timer-btns">
-        <button class="timer-btn" onclick="pomoReset()">↺</button>
-        <button class="timer-btn main" onclick="pomoToggle()" id="pomo-play">▶</button>
-        <button class="timer-btn" onclick="pomoSkip()">⏭</button>
+        <button class="timer-btn" onclick="pomoReset()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button>
+        <button class="timer-btn main" onclick="pomoToggle()" id="pomo-play"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M8 5v14l11-7z"/></svg></button>
+        <button class="timer-btn" onclick="pomoSkip()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M6 18l8.5-6L6 6v12zm8.5 0h2V6h-2v12z"/></svg></button>
       </div>
       <div class="pomo-settings">
         <div class="pomo-setting"><label data-i18n="timer.work">Travail (min)</label><input type="number" id="cfg-work" min="1" max="60" value="25"></div>
@@ -926,9 +916,9 @@ body{
     <div id="sw-panel" style="display:none;max-width:420px;margin:0 auto" class="card">
       <div class="sw-time" id="sw-display">00:00</div>
       <div class="timer-btns">
-        <button class="timer-btn" onclick="swLap()">◎</button>
-        <button class="timer-btn main" onclick="swToggle()" id="sw-play">▶</button>
-        <button class="timer-btn" onclick="swReset()">↺</button>
+        <button class="timer-btn" onclick="swLap()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></button>
+        <button class="timer-btn main" onclick="swToggle()" id="sw-play"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M8 5v14l11-7z"/></svg></button>
+        <button class="timer-btn" onclick="swReset()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></button>
       </div>
       <div class="sw-laps" id="sw-laps"></div>
     </div>
@@ -939,11 +929,11 @@ body{
 <!-- Bottom nav -->
 <nav class="bottom-nav">
   <div class="bottom-nav-inner">
-    <div class="bottom-nav-item active" data-page="dashboard" onclick="navigate('dashboard')"><span>◈</span><span class="bottom-nav-label" data-i18n="nav.dashboard">Home</span></div>
-    <div class="bottom-nav-item" data-page="habits" onclick="navigate('habits')"><span>◻</span><span class="bottom-nav-label" data-i18n="nav.habits.short">Habits</span></div>
-    <div class="bottom-nav-item" data-page="stats" onclick="navigate('stats')"><span>◷</span><span class="bottom-nav-label" data-i18n="nav.stats.short">Stats</span></div>
-    <div class="bottom-nav-item" data-page="todo" onclick="navigate('todo')"><span>≡</span><span class="bottom-nav-label" data-i18n="nav.todo.short">Todo</span></div>
-    <div class="bottom-nav-item" data-page="timer" onclick="navigate('timer')"><span>◉</span><span class="bottom-nav-label" data-i18n="nav.timer">Timer</span></div>
+    <div class="bottom-nav-item active" data-page="dashboard" onclick="navigate('dashboard')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+    <div class="bottom-nav-item" data-page="habits" onclick="navigate('habits')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></div>
+    <div class="bottom-nav-item" data-page="stats" onclick="navigate('stats')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+    <div class="bottom-nav-item" data-page="todo" onclick="navigate('todo')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div>
+    <div class="bottom-nav-item" data-page="timer" onclick="navigate('timer')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg></div>
   </div>
 </nav>
 
@@ -968,7 +958,7 @@ const TR = {
     'encourage.1':"Vous avez commencé, c'est l'essentiel.",
     'encourage.0':'Commencez votre première habitude du jour !',
     'habits.title':'Habitudes','habits.subtitle':'Gérez vos habitudes quotidiennes',
-    'habits.export':'⬇ Export CSV','habits.new':'+ Nouvelle',
+    'habits.new':'+ Nouvelle',
     'habits.streak':'Streak','habits.rate':'Taux','habits.days':'Jours',
     'habits.empty':'Aucune habitude. Créez votre première !',
     'habits.empty2':'Aucune habitude. Créez-en une !',
@@ -998,8 +988,7 @@ const TR = {
     'modal.newReminder':'Nouveau rappel','modal.label':'Libellé',
     'modal.reminderPlaceholder':'Ex: Réunion, Médicament...','modal.timeLabel':'Heure',
     'toast.habitDeleted':'Habitude supprimée','toast.habitCreated':'Habitude créée !',
-    'toast.habitEdited':'Habitude modifiée','toast.csvExported':'Export CSV téléchargé',
-    'toast.noHabits':'Aucune habitude','toast.enterName':'Entrez un nom',
+    'toast.habitEdited':'Habitude modifiée','toast.enterName':'Entrez un nom',
     'toast.enterTask':'Entrez une tâche','toast.taskAdded':'Tâche ajoutée !',
     'toast.enterLabel':'Entrez un libellé','toast.enterTime':'Entrez une heure',
     'toast.reminderAdded':'Rappel ajouté !','toast.pomoApplied':'Paramètres appliqués !',
@@ -1024,7 +1013,7 @@ const TR = {
     'encourage.1':"You've started, that's what counts.",
     'encourage.0':'Start your first habit of the day!',
     'habits.title':'Habits','habits.subtitle':'Manage your daily habits',
-    'habits.export':'⬇ Export CSV','habits.new':'+ New',
+    'habits.new':'+ New',
     'habits.streak':'Streak','habits.rate':'Rate','habits.days':'Days',
     'habits.empty':'No habits yet. Create your first!',
     'habits.empty2':'No habits. Create one!',
@@ -1054,8 +1043,7 @@ const TR = {
     'modal.newReminder':'New reminder','modal.label':'Label',
     'modal.reminderPlaceholder':'E.g.: Meeting, Medication...','modal.timeLabel':'Time',
     'toast.habitDeleted':'Habit deleted','toast.habitCreated':'Habit created!',
-    'toast.habitEdited':'Habit updated','toast.csvExported':'CSV export downloaded',
-    'toast.noHabits':'No habits','toast.enterName':'Enter a name',
+    'toast.habitEdited':'Habit updated','toast.enterName':'Enter a name',
     'toast.enterTask':'Enter a task','toast.taskAdded':'Task added!',
     'toast.enterLabel':'Enter a label','toast.enterTime':'Enter a time',
     'toast.reminderAdded':'Reminder added!','toast.pomoApplied':'Settings applied!',
@@ -1191,6 +1179,7 @@ function navigate(page) {
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.page===page));
   document.querySelectorAll('.bottom-nav-item').forEach(n=>n.classList.toggle('active',n.dataset.page===page));
   currentPage=page; closeMobileSidebar(); renderPage(page);
+  document.querySelector('.main').scrollTop=0;
 }
 function renderPage(page) {
   if (page==='dashboard') renderDashboard();
@@ -1371,18 +1360,6 @@ function saveHabit(id) {
     showToast(t('toast.habitCreated'));
   }
   save(); closeModal(); renderHabits();
-}
-function exportCSV() {
-  if (!state.habits.length) { showToast(t('toast.noHabits'),'error'); return; }
-  const allDates=new Set();
-  state.habits.forEach(h=>Object.keys(h.logs).forEach(d=>allDates.add(d)));
-  const dates=[...allDates].sort();
-  const csv=[['Date',...state.habits.map(h=>h.name)].join(','),
-    ...dates.map(d=>[d,...state.habits.map(h=>h.logs[d]!==undefined?h.logs[d]:'')].join(','))].join('\n');
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
-  a.download='momentum-habits.csv'; a.click();
-  showToast(t('toast.csvExported'));
 }
 
 // ===================== STATS =====================
@@ -1584,7 +1561,7 @@ function pomoTotalSecs() {
 function updatePomoUI() {
   document.getElementById('pomo-time').textContent=formatTime(pomoState.remaining);
   document.getElementById('pomo-phase').textContent=pomoPhaseLabel();
-  document.getElementById('pomo-play').textContent=pomoState.running?'⏸':'▶';
+  document.getElementById('pomo-play').innerHTML=pomoState.running?'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M8 5v14l11-7z"/></svg>';
   const ring=document.getElementById('pomo-ring'), total=pomoTotalSecs(), circ=2*Math.PI*90;
   ring.style.strokeDashoffset=circ*(1-pomoState.remaining/total);
   ring.style.stroke=pomoState.phase==='work'?'var(--accent)':'var(--green)';
@@ -1630,10 +1607,10 @@ function applyPomoConfig(){
 // ===================== STOPWATCH =====================
 let swState={running:false,elapsed:0,interval:null,laps:[],lastLapTime:0};
 function swToggle(){
-  if(swState.running){clearInterval(swState.interval);swState.running=false;document.getElementById('sw-play').textContent='▶';}
-  else{swState.running=true;document.getElementById('sw-play').textContent='⏸';const start=Date.now()-swState.elapsed*10;swState.interval=setInterval(()=>{swState.elapsed=Math.floor((Date.now()-start)/10);updateSwDisplay();},67);}
+  if(swState.running){clearInterval(swState.interval);swState.running=false;document.getElementById('sw-play').innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M8 5v14l11-7z"/></svg>';}
+  else{swState.running=true;document.getElementById('sw-play').innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';const start=Date.now()-swState.elapsed*10;swState.interval=setInterval(()=>{swState.elapsed=Math.floor((Date.now()-start)/10);updateSwDisplay();},67);}
 }
-function swReset(){clearInterval(swState.interval);swState={running:false,elapsed:0,interval:null,laps:[],lastLapTime:0};document.getElementById('sw-play').textContent='▶';document.getElementById('sw-display').textContent='00:00';document.getElementById('sw-laps').innerHTML='';}
+function swReset(){clearInterval(swState.interval);swState={running:false,elapsed:0,interval:null,laps:[],lastLapTime:0};document.getElementById('sw-play').innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M8 5v14l11-7z"/></svg>';document.getElementById('sw-display').textContent='00:00';document.getElementById('sw-laps').innerHTML='';}
 function swLap(){if(!swState.running&&swState.elapsed===0)return;const split=swState.elapsed-swState.lastLapTime;swState.laps.push({total:swState.elapsed,split});swState.lastLapTime=swState.elapsed;renderSwLaps();}
 function formatSwTime(h){const ts=Math.floor(h/100),m=Math.floor((ts%3600)/60),s=ts%60;return ts>=3600?`${pad(Math.floor(ts/3600))}:${pad(m)}:${pad(s)}`:`${pad(m)}:${pad(s)}`;}
 function updateSwDisplay(){document.getElementById('sw-display').textContent=formatSwTime(swState.elapsed);}
